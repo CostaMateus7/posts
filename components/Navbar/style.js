@@ -105,7 +105,7 @@ export const NavbarStyle = styled.header`
   
   ul{
     margin-left: 25px;
-    font-size: 20px;
+    font-size: 16px;
     color: #647196;
     display: flex;
     flex-direction: column;
