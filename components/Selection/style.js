@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const CardSelectStyle = styled.section`
   display: flex;
   justify-content: space-between;
-  padding: 30px 24px 24px 30px;
+  padding: 24px 16px 24px 16px;
   background-color: #373f68;
   border-radius: 10px;
   margin-bottom: 24px;
@@ -25,7 +25,7 @@ export const CardSelectStyle = styled.section`
     font-family: Jost;
     font-style: normal;
     font-weight: 700;
-    font-size: 24px;
+    font-size: 16px;
     line-height: 26px;
     letter-spacing: -.25px;
     color: #fff;
@@ -42,14 +42,14 @@ export const CardSelectStyle = styled.section`
     font-family: Jost;
     font-style: normal;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 13px;
     line-height: 20px;
     color: #f2f4fe;
     text-decoration: none;
     cursor: pointer;
     @media (max-width: 600px){
     padding: 3px 5px;
-    font-size: 16px;
+    font-size: 13px;
 }
   }
   section{
@@ -57,7 +57,7 @@ export const CardSelectStyle = styled.section`
     align-items: center;
     font-family: Jost;
     font-style: normal;
-    font-size: 16px;
+    font-size: 13px;
     line-height: 20px;
     color: #f2f4fe;
     mix-blend-mode: normal;

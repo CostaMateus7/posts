@@ -26,7 +26,7 @@ a{
 article{
   color: #647196;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 13px;
   margin: 10px 0px;
   line-height: 23px;
   @media (max-width: 600px){
@@ -37,7 +37,7 @@ div{
   font-family: Jost;
   font-style: normal;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 13px;
   line-height: 23px;
   text-align: center;
   letter-spacing: -.222222px;
@@ -55,12 +55,12 @@ div{
 }
 }
 button{
-  font-size: 20px;
+  font-size: 16px;
   background-color: transparent;
   border: none;
   color: #3a4374;
   @media (max-width: 600px){
-  font-size: 16px;
+  font-size: 13px;
 }
 }
 section{
@@ -92,18 +92,18 @@ section:hover{
 }
 h3{
   color: #3a4374;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: bolder;
   margin: 0px 0px 4px;
   @media (max-width: 1200px){
-  font-size: 20px;
+  font-size: 16px;
   margin: 0px;
 }
 }
 p{
   color: #4661E6;
   background-color: #f2f4ff;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: bold;
   padding: 5px 16px;
   display: inline-block;
@@ -117,6 +117,6 @@ p{
 span{
   color: #3a4374;
   font-weight: bolder;
-  font-size: 16px;
+  font-size: 13px;
 }
 `
