@@ -1,7 +1,5 @@
-import { ContainerDetailsStyle} from './style'
+import { ContainerDetailsStyle } from "./style";
 
-export default function ContainerDetailStyle({children}){
-  <ContainerDetailsStyle>
-    {children}
-  </ContainerDetailsStyle>
+export default function ContainerDetailStyle({ children }) {
+  <ContainerDetailsStyle>{children}</ContainerDetailsStyle>;
 }

@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-
-
 export const TampleteMobileStyle = styled.section`
   position: absolute;
   width: 100%;
@@ -10,10 +8,10 @@ export const TampleteMobileStyle = styled.section`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   mix-blend-mode: normal;
   z-index: 10;
-  article{
+  article {
     position: absolute;
     height: 100vh;
     width: 270px;
@@ -26,7 +24,7 @@ export const TampleteMobileStyle = styled.section`
     background-color: #f2f4ff;
     flex-direction: column;
   }
-  div{
+  div {
     display: flex;
     min-height: 200px;
     flex-direction: column;
@@ -36,7 +34,7 @@ export const TampleteMobileStyle = styled.section`
     gap: 40px;
     background-color: #fff;
   }
-  button{
+  button {
     border-radius: 10px;
     color: #4661e6;
     padding: 10px 24px;
@@ -49,7 +47,7 @@ export const TampleteMobileStyle = styled.section`
     border: none;
     cursor: pointer;
   }
-  button:hover{
-    background-color: #CFD7FF;
+  button:hover {
+    background-color: #cfd7ff;
   }
-`
+`;

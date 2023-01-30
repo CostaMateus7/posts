@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-
 export const HeaderMobile = styled.header`
   width: 100%;
   height: 80px;
@@ -21,23 +20,23 @@ export const HeaderMobile = styled.header`
   font-weight: 700;
   font-size: 15px;
   line-height: 22px;
-  letter-spacing: -.1875px;
+  letter-spacing: -0.1875px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-right: 0;
   display: none;
-  h1{
+  h1 {
     font-size: 20px;
     font-weight: bolder;
   }
-  p{
+  p {
     font-size: 16px;
   }
-  svg{
+  svg {
     cursor: pointer;
   }
-  @media (max-width: 1000px){
-  display: flex;
-}
-`
+  @media (max-width: 1000px) {
+    display: flex;
+  }
+`;

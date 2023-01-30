@@ -1,10 +1,5 @@
-import { TampleteMobileStyle } from './style'
+import { TampleteMobileStyle } from "./style";
 
-
-export default function TampleteMobile({children}){
-  return(
-    <TampleteMobileStyle>
-      {children}
-    </TampleteMobileStyle>
-  )
+export default function TampleteMobile({ children }) {
+  return <TampleteMobileStyle>{children}</TampleteMobileStyle>;
 }

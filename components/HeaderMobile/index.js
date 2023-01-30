@@ -1,10 +1,5 @@
-import { HeaderMobile } from './style'
+import { HeaderMobile } from "./style";
 
-
-export default function HeaderMobile({children}){
-  return(
-    <HeaderMobile>
-      {children}
-    </HeaderMobile>
-  )
+export default function HeaderMobile({ children }) {
+  return <HeaderMobile>{children}</HeaderMobile>;
 }

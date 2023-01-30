@@ -1,10 +1,5 @@
-import {CardSelectStyle} from './style'
+import { CardSelectStyle } from "./style";
 
-
-export default function Selection({children}){
-  return(
-    <CardSelectStyle>
-      {children}
-    </CardSelectStyle>
-  )
+export default function Selection({ children }) {
+  return <CardSelectStyle>{children}</CardSelectStyle>;
 }

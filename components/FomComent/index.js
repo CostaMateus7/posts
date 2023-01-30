@@ -1,10 +1,5 @@
-import { FormComentStyle } from "./style"
+import { FormComentStyle } from "./style";
 
-
-export default function FormComent({children}){
-  return(
-    <FormComentStyle>
-      {children}
-    </FormComentStyle>
-  )
+export default function FormComent({ children }) {
+  return <FormComentStyle>{children}</FormComentStyle>;
 }

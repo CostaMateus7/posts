@@ -1,93 +1,96 @@
-import Head from "next/head"
-import Link from "next/link"
-import CardContainer from "../components/CardContainercomment"
-import Selection from "../components/Selection"
-import { MdOutlineKeyboardArrowUp } from "react-icons/md"
-import { HiOutlineLightBulb } from "react-icons/hi"
-import { AiOutlineClose } from "react-icons/ai"
-import { TfiMenu } from "react-icons/tfi"
-import { useEffect, useMemo, useState } from "react"
-import Navbar from "../components/Navbar"
-import Container from "../components/Container"
-import MiniContainer from "../components/Mini-container"
-import { HeaderMobile } from "../components/HeaderMobile/style"
-import TampleteMobile from "../components/TampleteMobile"
+import Head from "next/head";
+import Link from "next/link";
+import CardContainer from "../components/CardContainercomment";
+import Selection from "../components/Selection";
+import { MdOutlineKeyboardArrowUp } from "react-icons/md";
+import { HiOutlineLightBulb } from "react-icons/hi";
+import { AiOutlineClose } from "react-icons/ai";
+import { TfiMenu } from "react-icons/tfi";
+import { useEffect, useMemo, useState } from "react";
+import Navbar from "../components/Navbar";
+import Container from "../components/Container";
+import MiniContainer from "../components/Mini-container";
+import { HeaderMobile } from "../components/HeaderMobile/style";
+import TampleteMobile from "../components/TampleteMobile";
 
-export async function getStaticProps(){
-  const data = await fetch('https://jsonplaceholder.typicode.com/posts')
-  const response = await data.json()
+export async function getStaticProps() {
+  const data = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const response = await data.json();
   return {
-    props:{
-      coments: response
-    }
-  }
+    props: {
+      coments: response,
+    },
+  };
 }
-export default function Home({coments}) {
-  const [numberFilter, setNumberFilter ] = useState(5)
-  const [ comments, setComments ] = useState([{}])
-  const [ controller, setController ] = useState([])
-  const [counter, setCounter] = useState(0)
-  const [Menu, setMenu ] = useState(false)
+export default function Home({ coments }) {
+  const [numberFilter, setNumberFilter] = useState(5);
+  const [comments, setComments] = useState([{}]);
+  const [controller, setController] = useState([]);
+  const [counter, setCounter] = useState(0);
+  const [Menu, setMenu] = useState(false);
 
-  let copiaComents = []
+  let copiaComents = [];
 
-  useEffect(()=>{
-    let copiaComents = []
-  coments.map((coment)=>{
-    coment.id <= 5 ? copiaComents = [...copiaComents, {
-      id: coment.id,
-      title: coment.title,
-      body: coment.body,
-      comentario: 2,
-      like: coment.id * (10 - coment.id)
-    } ] : ''
-  })
-  setController(copiaComents)
-  setComments(copiaComents) 
-  },[])
+  useEffect(() => {
+    let copiaComents = [];
+    coments.map((coment) => {
+      coment.id <= 5
+        ? (copiaComents = [
+            ...copiaComents,
+            {
+              id: coment.id,
+              title: coment.title,
+              body: coment.body,
+              comentario: 2,
+              like: coment.id * (10 - coment.id),
+            },
+          ])
+        : "";
+    });
+    setController(copiaComents);
+    setComments(copiaComents);
+  }, []);
 
-  useEffect(()=>{
-  },[numberFilter])
+  useEffect(() => {}, [numberFilter]);
 
-  useMemo(()=>{
-    if(counter == 1){
-      const novosComents = controller.sort(function(a, b){
+  useMemo(() => {
+    if (counter == 1) {
+      const novosComents = controller.sort(function (a, b) {
         return a.like < b.like ? -1 : a.like > b.like ? 1 : 0;
-  })
-      setComments(novosComents)
-      setNumberFilter(novosComents.length)
-      return
+      });
+      setComments(novosComents);
+      setNumberFilter(novosComents.length);
+      return;
     }
-    if(counter == 2){
-      const novosComments = controller.sort(function(a, b){
+    if (counter == 2) {
+      const novosComments = controller.sort(function (a, b) {
         return a.like > b.like ? -1 : a.like < b.like ? 1 : 0;
-    })
-    setComments(novosComments)
-    setNumberFilter(novosComments.length)
-    return
-  }
-    if(counter == 3){
-      const novosComents = controller.filter((coment)=> coment.like < 20 )
-      setComments(novosComents)
-      setNumberFilter(novosComents.length)
-      return
-      
+      });
+      setComments(novosComments);
+      setNumberFilter(novosComments.length);
+      return;
     }
-    else{
-      return 
+    if (counter == 3) {
+      const novosComents = controller.filter((coment) => coment.like < 20);
+      setComments(novosComents);
+      setNumberFilter(novosComents.length);
+      return;
+    } else {
+      return;
     }
-  }, [counter])
-  const handleClickMenu = ()=>{
-    setMenu(prevState => prevState === false ? true : false)
-    Menu === false ? document.body.style.overflowY = 'hidden' : document.body.style.overflowY = 'scroll'
-  }
+  }, [counter]);
+  const handleClickMenu = () => {
+    setMenu((prevState) => (prevState === false ? true : false));
+    Menu === false
+      ? (document.body.style.overflowY = "hidden")
+      : (document.body.style.overflowY = "scroll");
+  };
 
-  
   return (
     <>
       <Head>
         <title>Posts</title>
-        <meta name="description" content="Página principal de post"/>
+        <meta name="description" content="Página principal de post" />
       </Head>
       <Container>
         <Navbar>
@@ -96,28 +99,29 @@ export default function Home({coments}) {
             <p>Painel de Comentários</p>
           </div>
           <section>
-            <button 
-            type="click"
-            onClick={()=> setCounter(1)}
-            >Crescente
+            <button type="click" onClick={() => setCounter(1)}>
+              Crescente
             </button>
-            <button 
-            type="click"
-            onClick={()=> setCounter(2)}
-            >Decrescente
+            <button type="click" onClick={() => setCounter(2)}>
+              Decrescente
             </button>
-            <button 
-            type="click"
-            onClick={()=> setCounter(3)}
-            >Abaixo de 20 Likes</button>
+            <button type="click" onClick={() => setCounter(3)}>
+              Abaixo de 20 Likes
+            </button>
           </section>
           <article>
-              <h3>Roteiro</h3>
-              <ul>
-                <li>Planejado <span>1</span></li>
-                <li>Planejado <span>2</span></li>
-                <li>Planejado <span>3</span></li>
-              </ul>
+            <h3>Roteiro</h3>
+            <ul>
+              <li>
+                Planejado <span>1</span>
+              </li>
+              <li>
+                Planejado <span>2</span>
+              </li>
+              <li>
+                Planejado <span>3</span>
+              </li>
+            </ul>
           </article>
         </Navbar>
         <HeaderMobile>
@@ -126,68 +130,68 @@ export default function Home({coments}) {
             <p>Painel de Comentários</p>
           </div>
           <section>
-            {
-              Menu === false ?
-              <TfiMenu size={35} color="#fff"onClick={handleClickMenu}/>
-              :
-              < AiOutlineClose size={35} color="#fff"onClick={handleClickMenu}/>
-            }
+            {Menu === false ? (
+              <TfiMenu size={35} color="#fff" onClick={handleClickMenu} />
+            ) : (
+              <AiOutlineClose
+                size={35}
+                color="#fff"
+                onClick={handleClickMenu}
+              />
+            )}
           </section>
-            {
-              Menu === false ?
-              '':
-              <TampleteMobile>
-            <article>
-              <div>
-                <button 
-                  type="click"
-                  onClick={()=> setCounter(1)}
-                  >Crescente
+          {Menu === false ? (
+            ""
+          ) : (
+            <TampleteMobile>
+              <article>
+                <div>
+                  <button type="click" onClick={() => setCounter(1)}>
+                    Crescente
                   </button>
-                  <button 
-                  type="click"
-                  onClick={()=> setCounter(2)}
-                  >Decrescente
+                  <button type="click" onClick={() => setCounter(2)}>
+                    Decrescente
                   </button>
-                  <button 
-                  type="click"
-                  onClick={()=> setCounter(3)}
-                  >Abaixo de 20 Likes</button>
-              </div>
-            </article>
-          </TampleteMobile>
-            }
-          
+                  <button type="click" onClick={() => setCounter(3)}>
+                    Abaixo de 20 Likes
+                  </button>
+                </div>
+              </article>
+            </TampleteMobile>
+          )}
         </HeaderMobile>
-          <MiniContainer>
-            <Selection>
-              <HiOutlineLightBulb size={30} color="#fff"/>
-              <div>{numberFilter} Sugestões</div>
-              <section>
-                <span>Ordenar por:</span>
-                  <article>
-                    <select value={counter} 
-                    onChange={text => setCounter(text.target.value)}
-                    >
-                      <option value={0} defaultValue>Selecione um Filtro</option>
-                      <option value={1}>Likes Crescente</option>
-                      <option value={2}>Likes Decrescente</option>
-                      <option value={3}>Abaixo de 20 likes</option>
-                    </select>
-                  </article>
-              </section> 
-              <button>+ Adicionar Comentários</button>
-            </Selection>   
-            
-          {comments.map((coment)=>(
-            coment.id <= numberFilter ? 
+        <MiniContainer>
+          <Selection>
+            <HiOutlineLightBulb size={30} color="#fff" />
+            <div>{numberFilter} Sugestões</div>
+            <section>
+              <span>Ordenar por:</span>
+              <article>
+                <select
+                  value={counter}
+                  onChange={(text) => setCounter(text.target.value)}
+                >
+                  <option value={0} defaultValue>
+                    Selecione um Filtro
+                  </option>
+                  <option value={1}>Likes Crescente</option>
+                  <option value={2}>Likes Decrescente</option>
+                  <option value={3}>Abaixo de 20 likes</option>
+                </select>
+              </article>
+            </section>
+            <button>+ Adicionar Comentários</button>
+          </Selection>
 
-            <CardContainer key={coment.id}>
+          {comments.map((coment) =>
+            coment.id <= numberFilter ? (
+              <CardContainer key={coment.id}>
                 <section>
-                  <button><MdOutlineKeyboardArrowUp/></button>
+                  <button>
+                    <MdOutlineKeyboardArrowUp />
+                  </button>
                   <span>{coment.like}</span>
                 </section>
-
 
                 <Link href={`/details/${coment.id}`}>
                   <h3>{coment.title}</h3>
@@ -195,18 +199,29 @@ export default function Home({coments}) {
                   <p>Feature</p>
                 </Link>
 
-
                 <div>
-                  <svg data-v-30a547e3="" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 16" width="22px"><path data-v-30a547e3="" d="M2.62 16H1.346l.902-.91c.486-.491.79-1.13.872-1.823C1.036 11.887 0 9.89 0 7.794 0 3.928 3.52 0 9.03 0 14.87 0 18 3.615 18 7.455c0 3.866-3.164 7.478-8.97 7.478-1.016 0-2.078-.137-3.025-.388A4.705 4.705 0 0 1 2.62 16Z" fill="#CDD2EE"></path></svg>
+                  <svg
+                    data-v-30a547e3=""
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 18 16"
+                    width="22px"
+                  >
+                    <path
+                      data-v-30a547e3=""
+                      d="M2.62 16H1.346l.902-.91c.486-.491.79-1.13.872-1.823C1.036 11.887 0 9.89 0 7.794 0 3.928 3.52 0 9.03 0 14.87 0 18 3.615 18 7.455c0 3.866-3.164 7.478-8.97 7.478-1.016 0-2.078-.137-3.025-.388A4.705 4.705 0 0 1 2.62 16Z"
+                      fill="#CDD2EE"
+                    ></path>
+                  </svg>
                   <span>{coment.comentario}</span>
                 </div>
-                
-            </CardContainer>
-            : 
-            ''
-          ))}
+              </CardContainer>
+            ) : (
+              ""
+            )
+          )}
         </MiniContainer>
       </Container>
-   </>
-  )
+    </>
+  );
 }
