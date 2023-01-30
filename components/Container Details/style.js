@@ -19,7 +19,7 @@ justify-content: space-between;
 a{
   color: #647196;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 16px;
   display: flex;
   align-items: center;
   font-weight: bolder;
@@ -31,7 +31,7 @@ button{
   font-family: Jost;
   font-style: normal;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 20px;
   color: #f2f4fe;
   border: none;

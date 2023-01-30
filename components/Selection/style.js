@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const CardSelectStyle = styled.section`
   display: flex;
   justify-content: space-between;
-  padding: 20px 14px 20px 14px;
+  padding: 18px 12px 18px 12px;
   background-color: #373f68;
   border-radius: 10px;
   margin-bottom: 24px;
