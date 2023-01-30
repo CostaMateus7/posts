@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const CardSelectStyle = styled.section`
   display: flex;
   justify-content: space-between;
-  padding: 24px 16px 24px 16px;
+  padding: 20px 14px 20px 14px;
   background-color: #373f68;
   border-radius: 10px;
   margin-bottom: 24px;
@@ -25,7 +25,7 @@ export const CardSelectStyle = styled.section`
     font-family: Jost;
     font-style: normal;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 26px;
     letter-spacing: -.25px;
     color: #fff;

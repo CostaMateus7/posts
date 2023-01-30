@@ -27,7 +27,7 @@ p{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 20px;
+  font-size: 13px;
   margin-top: 20px;
 }
 article{
@@ -46,15 +46,15 @@ div{
 }
 h2{
   color: #3a4374;
-  font-size: 20px;
+  font-size: 16px;
 }
 h3{
   color: #647196;
-  font-size: 15px;
+  font-size: 13px;
 }
 h1{
   color: #3a4374;
-  font-size: 24px;
+  font-size: 18px;
   padding: 20px;
 }
 
