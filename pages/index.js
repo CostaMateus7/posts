@@ -47,7 +47,7 @@ export default function Home({ commentsFromAPI }) {
     setComments(copyComments);
   }, []);
 
-  useMemo(() => {
+  useEffect(() => {
     if (organizationComments == 0 || organizationComments == 1) {
       const newComents = controllerComments.sort(function (a, b) {
         return a.like < b.like ? -1 : a.like > b.like ? 1 : 0;
@@ -86,7 +86,6 @@ export default function Home({ commentsFromAPI }) {
     const newComments = controllerComments.filter(
       (comment) => comment.tag == tagName
     );
-    console.log(newComments);
     setComments(newComments);
     setNumberComments(newComments.length);
     return;
