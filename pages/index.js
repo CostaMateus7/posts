@@ -88,6 +88,7 @@ export default function Home({ commentsFromAPI }) {
     );
     setComments(newComments);
     setNumberComments(newComments.length);
+    setOrganizationComments(100);
     return;
   }
 
