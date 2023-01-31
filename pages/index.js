@@ -23,15 +23,14 @@ export async function getStaticProps() {
   };
 }
 export default function Home({ commentsFromAPI }) {
-  const [numberFilter, setNumberFilter] = useState(0);
+  const [numberComments, setNumberComments] = useState(0);
   const [comments, setComments] = useState([{}]);
   const [controllerComments, setControllerComments] = useState([]);
-  const [tagController, setTagController] = useState("");
-  const [counter, setCounter] = useState(0);
+  const [organizationComments, setOrganizationComments] = useState(1);
   const [Menu, setMenu] = useState(false);
 
   useEffect(() => {
-    const copiaComents = commentsFromAPI
+    const copyComments = commentsFromAPI
       .filter((comment) => comment.id <= 5)
       .map((comment) => {
         return {
@@ -43,38 +42,39 @@ export default function Home({ commentsFromAPI }) {
           tag: Math.floor(Math.random() * 100) % 2 === 0 ? "Feature" : "UI/UX",
         };
       });
-    setControllerComments(copiaComents);
-    setComments(copiaComents);
+    setNumberComments(copyComments.length);
+    setControllerComments(copyComments);
+    setComments(copyComments);
   }, []);
 
   useMemo(() => {
-    if (counter == 1 || counter == 0) {
-      const novosComents = controllerComments.sort(function (a, b) {
+    if (organizationComments == 0 || organizationComments == 1) {
+      const newComents = controllerComments.sort(function (a, b) {
         return a.like < b.like ? -1 : a.like > b.like ? 1 : 0;
       });
-      setComments(novosComents);
-      setNumberFilter(novosComents.length);
+      setComments(newComents);
+      setNumberComments(newComents.length);
       return;
     }
-    if (counter == 2) {
-      const novosComments = controllerComments.sort(function (a, b) {
+    if (organizationComments == 2) {
+      const newComments = controllerComments.sort(function (a, b) {
         return a.like > b.like ? -1 : a.like < b.like ? 1 : 0;
       });
-      setComments(novosComments);
-      setNumberFilter(novosComments.length);
+      setComments(newComments);
+      setNumberComments(newComments.length);
       return;
     }
-    if (counter == 3) {
-      const novosComents = controllerComments.filter(
+    if (organizationComments == 3) {
+      const newComments = controllerComments.filter(
         (coment) => coment.like < 20
       );
-      setComments(novosComents);
-      setNumberFilter(novosComents.length);
+      setComments(newComments);
+      setNumberComments(newComments.length);
       return;
     } else {
       return;
     }
-  }, [counter]);
+  }, [organizationComments]);
 
   const handleClickMenu = () => {
     setMenu((prevState) => (prevState === false ? true : false));
@@ -83,12 +83,12 @@ export default function Home({ commentsFromAPI }) {
       : (document.body.style.overflowY = "scroll");
   };
   function filterByTags(tagName) {
-    const novosComents = controllerComments.filter(
+    const newComments = controllerComments.filter(
       (comment) => comment.tag == tagName
     );
-    console.log(novosComents);
-    setComments(novosComents);
-    setNumberFilter(novosComents.length);
+    console.log(newComments);
+    setComments(newComments);
+    setNumberComments(newComments.length);
     return;
   }
 
@@ -105,7 +105,7 @@ export default function Home({ commentsFromAPI }) {
             <p>Painel de Comentários</p>
           </div>
           <section>
-            <button type="click" onClick={() => setCounter(1)}>
+            <button type="click" onClick={() => setOrganizationComments(1)}>
               All
             </button>
             <button type="click" onClick={() => filterByTags("Feature")}>
@@ -152,7 +152,10 @@ export default function Home({ commentsFromAPI }) {
             <TampleteMobile>
               <article>
                 <div>
-                  <button type="click" onClick={() => setCounter(1)}>
+                  <button
+                    type="click"
+                    onClick={() => setOrganizationComments(1)}
+                  >
                     All
                   </button>
                   <button type="click" onClick={() => filterByTags("Feature")}>
@@ -166,16 +169,19 @@ export default function Home({ commentsFromAPI }) {
             </TampleteMobile>
           )}
         </HeaderMobile>
+
         <MiniContainer>
           <Selection>
             <HiOutlineLightBulb size={30} color="#fff" />
-            <div>{numberFilter} Sugestões</div>
+            <div>{numberComments} Sugestões</div>
             <section>
               <span>Ordenar por:</span>
               <article>
                 <select
-                  value={counter}
-                  onChange={(text) => setCounter(text.target.value)}
+                  value={organizationComments}
+                  onChange={(text) =>
+                    setOrganizationComments(text.target.value)
+                  }
                 >
                   <option value={0}>Selecione um Filtro</option>
                   <option value={1}>Likes Crescente</option>
@@ -187,43 +193,39 @@ export default function Home({ commentsFromAPI }) {
             <button>+ Adicionar Comentários</button>
           </Selection>
 
-          {comments.map((coment) =>
-            coment.id <= numberFilter ? (
-              <CardContainer key={coment.id}>
-                <section>
-                  <button>
-                    <MdOutlineKeyboardArrowUp />
-                  </button>
-                  <span>{coment.like}</span>
-                </section>
+          {comments.map((coment) => (
+            <CardContainer key={coment.id}>
+              <section>
+                <button>
+                  <MdOutlineKeyboardArrowUp />
+                </button>
+                <span>{coment.like}</span>
+              </section>
 
-                <Link href={`/details/${coment.id}`}>
-                  <h3>{coment.title}</h3>
-                  <article>{coment.body}</article>
-                  <p>{coment.tag}</p>
-                </Link>
+              <Link href={`/details/${coment.id}`}>
+                <h3>{coment.title}</h3>
+                <article>{coment.body}</article>
+                <p>{coment.tag}</p>
+              </Link>
 
-                <div>
-                  <svg
+              <div>
+                <svg
+                  data-v-30a547e3=""
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 18 16"
+                  width="22px"
+                >
+                  <path
                     data-v-30a547e3=""
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 18 16"
-                    width="22px"
-                  >
-                    <path
-                      data-v-30a547e3=""
-                      d="M2.62 16H1.346l.902-.91c.486-.491.79-1.13.872-1.823C1.036 11.887 0 9.89 0 7.794 0 3.928 3.52 0 9.03 0 14.87 0 18 3.615 18 7.455c0 3.866-3.164 7.478-8.97 7.478-1.016 0-2.078-.137-3.025-.388A4.705 4.705 0 0 1 2.62 16Z"
-                      fill="#CDD2EE"
-                    ></path>
-                  </svg>
-                  <span>{coment.comentario}</span>
-                </div>
-              </CardContainer>
-            ) : (
-              ""
-            )
-          )}
+                    d="M2.62 16H1.346l.902-.91c.486-.491.79-1.13.872-1.823C1.036 11.887 0 9.89 0 7.794 0 3.928 3.52 0 9.03 0 14.87 0 18 3.615 18 7.455c0 3.866-3.164 7.478-8.97 7.478-1.016 0-2.078-.137-3.025-.388A4.705 4.705 0 0 1 2.62 16Z"
+                    fill="#CDD2EE"
+                  ></path>
+                </svg>
+                <span>{coment.comentario}</span>
+              </div>
+            </CardContainer>
+          ))}
         </MiniContainer>
       </Container>
     </>
