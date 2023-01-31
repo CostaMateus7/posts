@@ -15,47 +15,46 @@ import TampleteMobile from "../components/TampleteMobile";
 
 export async function getStaticProps() {
   const data = await fetch("https://jsonplaceholder.typicode.com/posts");
-  const response = await data.json();
+  const commentsFromAPI = await data.json();
   return {
     props: {
-      coments: response,
+      commentsFromAPI,
     },
   };
 }
-export default function Home({ coments }) {
-  const [numberFilter, setNumberFilter] = useState(5);
+export default function Home({ commentsFromAPI }) {
+  const [numberFilter, setNumberFilter] = useState(0);
   const [comments, setComments] = useState([{}]);
-  const [controller, setController] = useState([]);
+  const [controllerComments, setControllerComments] = useState([]);
+  const [tagController, setTagController] = useState("");
   const [counter, setCounter] = useState(0);
   const [Menu, setMenu] = useState(false);
 
-  let copiaComents = [];
-
   useEffect(() => {
-    let copiaComents = [];
-    coments.map((coment) => {
-      coment.id <= 5
-        ? (copiaComents = [
-            ...copiaComents,
-            {
-              id: coment.id,
-              title: coment.title,
-              body: coment.body,
-              comentario: 2,
-              like: coment.id * (10 - coment.id),
-            },
-          ])
-        : "";
-    });
-    setController(copiaComents);
+    const copiaComents = commentsFromAPI
+      .filter((comment) => comment.id <= 5)
+      .map((comment) => {
+        return {
+          id: comment.id,
+          title: comment.title,
+          body: comment.body,
+          comentario: 2,
+          like: comment.id * (10 - comment.id),
+          tag: Math.floor(Math.random() * 100) % 2 === 0 ? "Feature" : "UI/UX",
+        };
+      });
+    setControllerComments(copiaComents);
     setComments(copiaComents);
   }, []);
 
-  useEffect(() => {}, [numberFilter]);
-
   useMemo(() => {
+    if (counter == 0) {
+      setNumberFilter(0);
+      setComments([{}]);
+      return;
+    }
     if (counter == 1) {
-      const novosComents = controller.sort(function (a, b) {
+      const novosComents = controllerComments.sort(function (a, b) {
         return a.like < b.like ? -1 : a.like > b.like ? 1 : 0;
       });
       setComments(novosComents);
@@ -63,7 +62,7 @@ export default function Home({ coments }) {
       return;
     }
     if (counter == 2) {
-      const novosComments = controller.sort(function (a, b) {
+      const novosComments = controllerComments.sort(function (a, b) {
         return a.like > b.like ? -1 : a.like < b.like ? 1 : 0;
       });
       setComments(novosComments);
@@ -71,7 +70,9 @@ export default function Home({ coments }) {
       return;
     }
     if (counter == 3) {
-      const novosComents = controller.filter((coment) => coment.like < 20);
+      const novosComents = controllerComments.filter(
+        (coment) => coment.like < 20
+      );
       setComments(novosComents);
       setNumberFilter(novosComents.length);
       return;
@@ -79,12 +80,22 @@ export default function Home({ coments }) {
       return;
     }
   }, [counter]);
+
   const handleClickMenu = () => {
     setMenu((prevState) => (prevState === false ? true : false));
     Menu === false
       ? (document.body.style.overflowY = "hidden")
       : (document.body.style.overflowY = "scroll");
   };
+  function filterByTags(tagName) {
+    const novosComents = controllerComments.filter(
+      (comment) => comment.tag == tagName
+    );
+    console.log(novosComents);
+    setComments(novosComents);
+    setNumberFilter(novosComents.length);
+    return;
+  }
 
   return (
     <>
@@ -100,13 +111,13 @@ export default function Home({ coments }) {
           </div>
           <section>
             <button type="click" onClick={() => setCounter(1)}>
-              Crescente
+              All
             </button>
-            <button type="click" onClick={() => setCounter(2)}>
-              Decrescente
+            <button type="click" onClick={() => filterByTags("Feature")}>
+              Feature
             </button>
-            <button type="click" onClick={() => setCounter(3)}>
-              Abaixo de 20 Likes
+            <button type="click" onClick={() => filterByTags("UI/UX")}>
+              UI/UX
             </button>
           </section>
           <article>
@@ -147,13 +158,13 @@ export default function Home({ coments }) {
               <article>
                 <div>
                   <button type="click" onClick={() => setCounter(1)}>
-                    Crescente
+                    All
                   </button>
-                  <button type="click" onClick={() => setCounter(2)}>
-                    Decrescente
+                  <button type="click" onClick={() => filterByTags("Feature")}>
+                    Feature
                   </button>
-                  <button type="click" onClick={() => setCounter(3)}>
-                    Abaixo de 20 Likes
+                  <button type="click" onClick={() => filterByTags("UI/UX")}>
+                    UI/UX
                   </button>
                 </div>
               </article>
@@ -171,9 +182,7 @@ export default function Home({ coments }) {
                   value={counter}
                   onChange={(text) => setCounter(text.target.value)}
                 >
-                  <option value={0} defaultValue>
-                    Selecione um Filtro
-                  </option>
+                  <option value={0}>Selecione um Filtro</option>
                   <option value={1}>Likes Crescente</option>
                   <option value={2}>Likes Decrescente</option>
                   <option value={3}>Abaixo de 20 likes</option>
@@ -196,7 +205,7 @@ export default function Home({ coments }) {
                 <Link href={`/details/${coment.id}`}>
                   <h3>{coment.title}</h3>
                   <article>{coment.body}</article>
-                  <p>Feature</p>
+                  <p>{coment.tag}</p>
                 </Link>
 
                 <div>

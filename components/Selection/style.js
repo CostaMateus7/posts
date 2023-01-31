@@ -7,6 +7,7 @@ export const CardSelectStyle = styled.section`
   background-color: #373f68;
   border-radius: 10px;
   margin-bottom: 24px;
+  min-width: 880px;
   @media (max-width: 1000px) {
     position: absolute;
     top: 80px;
