@@ -22,11 +22,12 @@ export async function getStaticProps() {
     },
   };
 }
+
 export default function Home({ commentsFromAPI }) {
   const [numberComments, setNumberComments] = useState(0);
-  const [comments, setComments] = useState([{}]);
+  const [comments, setComments] = useState([]);
   const [controllerComments, setControllerComments] = useState([]);
-  const [organizationComments, setOrganizationComments] = useState(1);
+  const [organizationComments, setOrganizationComments] = useState("NO_FILTER");
   const [Menu, setMenu] = useState(false);
 
   useEffect(() => {
@@ -47,35 +48,6 @@ export default function Home({ commentsFromAPI }) {
     setComments(copyComments);
   }, []);
 
-  useMemo(() => {
-    if (organizationComments == 0 || organizationComments == 1) {
-      const newComents = controllerComments.sort(function (a, b) {
-        return a.like < b.like ? -1 : a.like > b.like ? 1 : 0;
-      });
-      setComments(newComents);
-      setNumberComments(newComents.length);
-      return;
-    }
-    if (organizationComments == 2) {
-      const newComments = controllerComments.sort(function (a, b) {
-        return a.like > b.like ? -1 : a.like < b.like ? 1 : 0;
-      });
-      setComments(newComments);
-      setNumberComments(newComments.length);
-      return;
-    }
-    if (organizationComments == 3) {
-      const newComments = controllerComments.filter(
-        (coment) => coment.like < 20
-      );
-      setComments(newComments);
-      setNumberComments(newComments.length);
-      return;
-    } else {
-      return;
-    }
-  }, [organizationComments]);
-
   const handleClickMenu = () => {
     setMenu((prevState) => (prevState === false ? true : false));
     Menu === false
@@ -83,15 +55,45 @@ export default function Home({ commentsFromAPI }) {
       : (document.body.style.overflowY = "scroll");
   };
   function filterByTags(tagName) {
+    if (tagName === undefined) {
+      setComments(controllerComments);
+      setNumberComments(controllerComments.length);
+      return;
+    }
     const newComments = controllerComments.filter(
       (comment) => comment.tag == tagName
     );
     setComments(newComments);
     setNumberComments(newComments.length);
-    setOrganizationComments(100);
     return;
   }
-
+  function sortComments(sortOrder) {
+    if (sortOrder === "NO_FILTER") {
+      const newComents = controllerComments.sort(function (a, b) {
+        return a.like < b.like ? -1 : a.like > b.like ? 1 : 0;
+      });
+      setComments(newComents);
+      setNumberComments(newComents.length);
+      return;
+    }
+    if (sortOrder === "LIKE_ASC") {
+      const newComents = comments.sort(function (a, b) {
+        return a.like < b.like ? -1 : a.like > b.like ? 1 : 0;
+      });
+      setComments(newComents);
+      setNumberComments(newComents.length);
+      return;
+    }
+    if (sortOrder === "LIKE_DESC") {
+      const newComments = comments.sort(function (a, b) {
+        return a.like > b.like ? -1 : a.like < b.like ? 1 : 0;
+      });
+      setComments(newComments);
+      setNumberComments(newComments.length);
+      return;
+    }
+    return console.log(sortOrder);
+  }
   return (
     <>
       <Head>
@@ -105,7 +107,7 @@ export default function Home({ commentsFromAPI }) {
             <p>Painel de Comentários</p>
           </div>
           <section>
-            <button type="click" onClick={() => setOrganizationComments(1)}>
+            <button type="click" onClick={() => filterByTags(undefined)}>
               All
             </button>
             <button type="click" onClick={() => filterByTags("Feature")}>
@@ -152,10 +154,7 @@ export default function Home({ commentsFromAPI }) {
             <TampleteMobile>
               <article>
                 <div>
-                  <button
-                    type="click"
-                    onClick={() => setOrganizationComments(1)}
-                  >
+                  <button type="click" onClick={() => filterByTags(undefined)}>
                     All
                   </button>
                   <button type="click" onClick={() => filterByTags("Feature")}>
@@ -179,14 +178,14 @@ export default function Home({ commentsFromAPI }) {
               <article>
                 <select
                   value={organizationComments}
-                  onChange={(text) =>
-                    setOrganizationComments(text.target.value)
-                  }
+                  onChange={(text) => {
+                    setOrganizationComments(text.target.value);
+                    sortComments(text.target.value);
+                  }}
                 >
-                  <option value={0}>Selecione um Filtro</option>
-                  <option value={1}>Likes Crescente</option>
-                  <option value={2}>Likes Decrescente</option>
-                  <option value={3}>Abaixo de 20 likes</option>
+                  <option value={"NO_FILTER"}>Selecione um Filtro</option>
+                  <option value={"LIKE_ASC"}>Likes Crescente</option>
+                  <option value={"LIKE_DESC"}>Likes Decrescente</option>
                 </select>
               </article>
             </section>
