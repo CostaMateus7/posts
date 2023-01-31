@@ -45,6 +45,7 @@ export default function Home({ commentsFromAPI }) {
       });
     setControllerComments(copiaComents);
     setComments(copiaComents);
+    setCounter(1);
   }, []);
 
   useMemo(() => {
