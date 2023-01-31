@@ -45,16 +45,10 @@ export default function Home({ commentsFromAPI }) {
       });
     setControllerComments(copiaComents);
     setComments(copiaComents);
-    setCounter(1);
   }, []);
 
   useMemo(() => {
-    if (counter == 0) {
-      setNumberFilter(0);
-      setComments([{}]);
-      return;
-    }
-    if (counter == 1) {
+    if (counter == 1 || counter == 0) {
       const novosComents = controllerComments.sort(function (a, b) {
         return a.like < b.like ? -1 : a.like > b.like ? 1 : 0;
       });
