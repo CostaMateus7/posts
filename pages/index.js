@@ -47,7 +47,7 @@ export default function Home({ commentsFromAPI }) {
     setComments(copyComments);
   }, []);
 
-  useEffect(() => {
+  useMemo(() => {
     if (organizationComments == 0 || organizationComments == 1) {
       const newComents = controllerComments.sort(function (a, b) {
         return a.like < b.like ? -1 : a.like > b.like ? 1 : 0;
